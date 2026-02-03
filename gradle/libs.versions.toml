@@ -24,7 +24,7 @@ lottieCompose = "6.7.1"
 coil-bom = "3.3.0"
 playReview = "2.0.2"
 playAppUpdate = "2.1.0"
-profileinstaller = "1.5.0-alpha02"
+profileinstaller = "1.4.1"
 truth = "1.4.5"
 junit = "4.13.2"
 archCoreTesting = "2.2.0"
@@ -44,7 +44,7 @@ googleServices = "4.4.4"
 firebaseCrashlytics = "3.0.6"
 firebasePerf = "2.0.2"
 baselineprofile = "1.5.0-alpha02"
-playServicesIdentityCredentials = "16.0.0-alpha08"
+playServicesIdentityCredentials = "16.0.0-alpha10"
 
 
 [libraries]

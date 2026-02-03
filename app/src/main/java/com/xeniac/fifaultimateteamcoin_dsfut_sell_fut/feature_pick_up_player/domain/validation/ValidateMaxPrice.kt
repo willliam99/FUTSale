@@ -10,7 +10,7 @@ class ValidateMaxPrice @Inject constructor() {
         maxPrice: String?
     ): PickUpPlayerError? {
         val isMaxPriceBlank = maxPrice.isNullOrBlank()
-        val doesMaxPriceContainNonDigits = !isMaxPriceBlank && maxPrice!!.any { !it.isDigit() }
+        val doesMaxPriceContainNonDigits = !isMaxPriceBlank && maxPrice.any { !it.isDigit() }
         if (doesMaxPriceContainNonDigits) {
             return PickUpPlayerError.InvalidMaxPrice
         }

@@ -10,7 +10,7 @@ class ValidateMinPrice @Inject constructor() {
         minPrice: String?
     ): PickUpPlayerError? {
         val isMinPriceBlank = minPrice.isNullOrBlank()
-        val doesMinPriceContainNonDigits = !isMinPriceBlank && minPrice!!.any { !it.isDigit() }
+        val doesMinPriceContainNonDigits = !isMinPriceBlank && minPrice.any { !it.isDigit() }
         if (doesMinPriceContainNonDigits) {
             return PickUpPlayerError.InvalidMinPrice
         }

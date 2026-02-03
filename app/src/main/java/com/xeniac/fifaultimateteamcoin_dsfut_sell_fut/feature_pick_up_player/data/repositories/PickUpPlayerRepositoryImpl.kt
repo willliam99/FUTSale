@@ -28,6 +28,7 @@ import io.ktor.client.statement.request
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.JsonConvertException
 import io.ktor.util.network.UnresolvedAddressException
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.SerializationException
@@ -36,13 +37,12 @@ import java.net.UnknownHostException
 import java.security.cert.CertPathValidatorException
 import javax.inject.Inject
 import javax.net.ssl.SSLHandshakeException
-import kotlin.coroutines.coroutineContext
 
 class PickUpPlayerRepositoryImpl @Inject constructor(
     private val httpClient: Lazy<HttpClient>,
     private val dsfutDataStoreRepository: Lazy<DsfutDataStoreRepository>,
     private val playersDao: Lazy<PlayersDao>,
-    @MD5HashGeneratorQualifier private val md5HashGenerator: Lazy<HashGenerator>
+    @param:MD5HashGeneratorQualifier private val md5HashGenerator: Lazy<HashGenerator>
 ) : PickUpPlayerRepository {
 
     override suspend fun pickUpPlayer(
@@ -80,7 +80,7 @@ class PickUpPlayerRepositoryImpl @Inject constructor(
 
                     val isPlayerPickedUpSuccessfully = responseDto.playerDto != null
                     if (isPlayerPickedUpSuccessfully) {
-                        val playerEntity = responseDto.playerDto!!.copy(
+                        val playerEntity = responseDto.playerDto.copy(
                             platform = selectedPlatform
                         ).toPlayerEntity()
 
@@ -162,7 +162,7 @@ class PickUpPlayerRepositoryImpl @Inject constructor(
             e.printStackTrace()
             Result.Error(PickUpPlayerError.Network.CertPathValidatorException)
         } catch (e: Exception) {
-            coroutineContext.ensureActive()
+            currentCoroutineContext().ensureActive()
             Timber.e("Pick up player Exception:")
             e.printStackTrace()
             Result.Error(PickUpPlayerError.Network.SomethingWentWrong)

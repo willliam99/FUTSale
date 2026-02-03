@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
@@ -193,6 +192,7 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
+        resValues = true
     }
 
     compileOptions {
@@ -201,19 +201,6 @@ android {
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(target = "17")
-
-            // Enable Context-Sensitive Resolution in Kotlin 2.2
-            freeCompilerArgs.add("-Xcontext-sensitive-resolution")
-        }
-    }
-
-    room {
-        schemaDirectory(path = "$projectDir/roomSchemas")
     }
 
     sourceSets {
@@ -238,8 +225,19 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        // Enable Context-Sensitive Resolution in Kotlin 2.2
+        freeCompilerArgs.add("-Xcontext-sensitive-resolution")
+    }
+}
+
 hilt {
     enableAggregatingTask = true
+}
+
+room {
+    schemaDirectory(path = "$projectDir/roomSchemas")
 }
 
 androidComponents {

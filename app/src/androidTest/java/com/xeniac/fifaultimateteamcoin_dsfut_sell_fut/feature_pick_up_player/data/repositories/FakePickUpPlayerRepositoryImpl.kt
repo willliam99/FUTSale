@@ -28,7 +28,7 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class FakePickUpPlayerRepositoryImpl @Inject constructor(
-    @MD5HashGeneratorQualifier private val md5HashGenerator: Lazy<HashGenerator>
+    @param:MD5HashGeneratorQualifier private val md5HashGenerator: Lazy<HashGenerator>
 ) : PickUpPlayerRepository {
 
     private var isNetworkAvailable = true
@@ -116,7 +116,7 @@ class FakePickUpPlayerRepositoryImpl @Inject constructor(
                 val isPlayerPickedUpSuccessfully = responseDto.playerDto != null
                 if (isPlayerPickedUpSuccessfully) {
                     pickedUpPlayerId += 1
-                    val playerEntity = responseDto.playerDto!!.toPlayerEntity().copy(
+                    val playerEntity = responseDto.playerDto.toPlayerEntity().copy(
                         id = pickedUpPlayerId * 100
                     )
                     DummyPlayersHelper.latestPlayerEntities.add(playerEntity)

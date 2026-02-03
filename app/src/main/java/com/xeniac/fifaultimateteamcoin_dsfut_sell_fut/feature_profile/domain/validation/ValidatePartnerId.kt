@@ -1,8 +1,11 @@
 package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.validation
 
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.errors.UpdatePartnerIdError
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-class ValidatePartnerId {
+@ViewModelScoped
+class ValidatePartnerId @Inject constructor() {
     operator fun invoke(
         partnerId: String
     ): UpdatePartnerIdError? {

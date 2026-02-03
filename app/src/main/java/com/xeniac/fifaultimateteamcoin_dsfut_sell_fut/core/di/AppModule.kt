@@ -83,9 +83,10 @@ internal object AppModule {
     fun provideVibrator(
         @ApplicationContext context: Context,
         vibratorManager: Lazy<VibratorManager>
-    ): Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        vibratorManager.get().defaultVibrator
-    } else context.getSystemService(Vibrator::class.java)
+    ): Vibrator = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> vibratorManager.get().defaultVibrator
+        else -> context.getSystemService(Vibrator::class.java)
+    }
 
     @Provides
     @Singleton

@@ -3,10 +3,13 @@ package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_onboarding.domain
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Result
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.DsfutDataStoreRepository
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_onboarding.domain.errors.CompleteOnboardingError
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class CompleteOnboardingUseCase(
+@ViewModelScoped
+class CompleteOnboardingUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository
 ) {
     operator fun invoke(

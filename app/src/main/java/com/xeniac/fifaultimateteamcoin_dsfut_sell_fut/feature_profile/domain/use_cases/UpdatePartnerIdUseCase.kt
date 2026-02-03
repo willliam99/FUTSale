@@ -5,11 +5,14 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.D
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.errors.UpdatePartnerIdError
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.models.UpdatePartnerIdResult
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.validation.ValidatePartnerId
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class UpdatePartnerIdUseCase(
+@ViewModelScoped
+class UpdatePartnerIdUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository,
     private val validatePartnerId: ValidatePartnerId
 ) {

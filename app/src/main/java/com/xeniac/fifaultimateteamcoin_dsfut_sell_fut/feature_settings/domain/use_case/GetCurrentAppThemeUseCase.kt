@@ -2,9 +2,12 @@ package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_settings.domain.u
 
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.AppTheme
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.SettingsDataStoreRepository
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetCurrentAppThemeUseCase(
+@ViewModelScoped
+class GetCurrentAppThemeUseCase @Inject constructor(
     private val settingsDataStoreRepository: SettingsDataStoreRepository
 ) {
     operator fun invoke(): Flow<AppTheme> = settingsDataStoreRepository.getCurrentAppTheme()

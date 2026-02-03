@@ -8,10 +8,13 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.dom
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.domain.validation.ValidatePartnerId
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.domain.validation.ValidateSecretKey
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.domain.validation.ValidateTakeAfter
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class PickUpPlayerUseCase(
+@ViewModelScoped
+class PickUpPlayerUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository,
     private val pickUpPlayerRepository: PickUpPlayerRepository,
     private val validatePartnerId: ValidatePartnerId,

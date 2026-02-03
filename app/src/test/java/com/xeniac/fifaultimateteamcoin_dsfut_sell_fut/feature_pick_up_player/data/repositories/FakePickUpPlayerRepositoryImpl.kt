@@ -165,7 +165,7 @@ class FakePickUpPlayerRepositoryImpl(
                 val isPlayerPickedUpSuccessfully = responseDto.playerDto != null
                 if (isPlayerPickedUpSuccessfully) {
                     pickedUpPlayerId += 1
-                    val playerEntity = responseDto.playerDto!!.toPlayerEntity().copy(
+                    val playerEntity = responseDto.playerDto.toPlayerEntity().copy(
                         id = pickedUpPlayerId * 100
                     )
                     latestPlayerEntities.add(playerEntity)

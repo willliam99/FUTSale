@@ -5,10 +5,13 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Result
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.IsActivityRestartNeeded
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.SettingsDataStoreRepository
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_settings.domain.errors.StoreAppLocaleError
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class StoreCurrentAppLocaleUseCase(
+@ViewModelScoped
+class StoreCurrentAppLocaleUseCase @Inject constructor(
     private val settingsDataStoreRepository: SettingsDataStoreRepository
 ) {
     operator fun invoke(

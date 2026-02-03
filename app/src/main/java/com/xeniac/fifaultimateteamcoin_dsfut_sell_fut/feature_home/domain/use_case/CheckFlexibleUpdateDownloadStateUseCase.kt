@@ -2,9 +2,12 @@ package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.domain.use_c
 
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.domain.repositories.AppUpdateRepository
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.domain.repositories.IsUpdateDownloaded
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class CheckFlexibleUpdateDownloadStateUseCase(
+@ViewModelScoped
+class CheckFlexibleUpdateDownloadStateUseCase @Inject constructor(
     private val appUpdateRepository: AppUpdateRepository
 ) {
     operator fun invoke(): Flow<IsUpdateDownloaded> =

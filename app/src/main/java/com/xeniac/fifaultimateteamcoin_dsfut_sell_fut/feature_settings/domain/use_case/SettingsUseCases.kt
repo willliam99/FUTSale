@@ -1,8 +1,11 @@
 package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_settings.domain.use_case
 
 import dagger.Lazy
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-data class SettingsUseCases(
+@ViewModelScoped
+data class SettingsUseCases @Inject constructor(
     val getCurrentAppLocaleUseCase: Lazy<GetCurrentAppLocaleUseCase>,
     val getCurrentAppThemeUseCase: Lazy<GetCurrentAppThemeUseCase>,
     val getIsNotificationSoundEnabledUseCase: Lazy<GetIsNotificationSoundEnabledUseCase>,

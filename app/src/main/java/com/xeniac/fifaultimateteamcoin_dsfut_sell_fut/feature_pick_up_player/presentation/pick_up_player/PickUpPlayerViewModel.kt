@@ -222,14 +222,14 @@ class PickUpPlayerViewModel @Inject constructor(
                 hasPartnerIdError -> {
                     _autoPickUpPlayerEventChannel.send(
                         PickUpPlayerUiEvent.ShowPartnerIdSnackbar(
-                            pickUpPlayerResult.partnerIdError!!.asUiText()
+                            pickUpPlayerResult.partnerIdError.asUiText()
                         )
                     )
                 }
                 hasSecretKeyError -> {
                     _autoPickUpPlayerEventChannel.send(
                         PickUpPlayerUiEvent.ShowSecretKeySnackbar(
-                            pickUpPlayerResult.secretKeyError!!.asUiText()
+                            pickUpPlayerResult.secretKeyError.asUiText()
                         )
                     )
                 }
@@ -332,14 +332,14 @@ class PickUpPlayerViewModel @Inject constructor(
                 hasPartnerIdError -> {
                     _pickUpPlayerOnceEventChannel.send(
                         PickUpPlayerUiEvent.ShowPartnerIdSnackbar(
-                            pickUpPlayerResult.partnerIdError!!.asUiText()
+                            pickUpPlayerResult.partnerIdError.asUiText()
                         )
                     )
                 }
                 hasSecretKeyError -> {
                     _pickUpPlayerOnceEventChannel.send(
                         PickUpPlayerUiEvent.ShowSecretKeySnackbar(
-                            pickUpPlayerResult.secretKeyError!!.asUiText()
+                            pickUpPlayerResult.secretKeyError.asUiText()
                         )
                     )
                 }

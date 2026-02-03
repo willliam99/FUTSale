@@ -1,11 +1,10 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
@@ -32,8 +31,8 @@ android {
         applicationId = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
         minSdk = 23
         targetSdk = 36
-        versionCode = 33
-        versionName = "2.1.6"
+        versionCode = 34
+        versionName = "2.1.7"
 
         testInstrumentationRunner = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.HiltTestRunner"
 
@@ -108,6 +107,21 @@ android {
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("release")
             ndk.debugSymbolLevel = "FULL" // Include native debug symbols file in app bundle
+
+            configure<CrashlyticsExtension> {
+                /*
+                Enable processing and uploading of native symbols to Firebase servers.
+                By default, this is disabled to improve build speeds.
+                This flag must be enabled to see properly-symbolicated native
+                stack traces in the Crashlytics dashboard.
+                 */
+                nativeSymbolUploadEnabled = true
+            }
+
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -193,6 +207,7 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
+        resValues = true
     }
 
     compileOptions {
@@ -203,22 +218,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget = JvmTarget.fromTarget(target = "17")
-
-            // Enable Context-Sensitive Resolution in Kotlin 2.2
-            freeCompilerArgs.add("-Xcontext-sensitive-resolution")
-        }
-    }
-
-    room {
-        schemaDirectory(path = "$projectDir/roomSchemas")
-    }
-
     sourceSets {
         // Adds room exported schema location as test app assets
-        getByName("androidTest").assets.srcDirs("$projectDir/roomSchemas")
+        getByName("androidTest").assets.directories += "$projectDir/roomSchemas"
     }
 
     packaging {
@@ -238,8 +240,19 @@ android {
     }
 }
 
+kotlin {
+    compilerOptions {
+        // Enable Context-Sensitive Resolution in Kotlin 2.2
+        freeCompilerArgs.add("-Xcontext-sensitive-resolution")
+    }
+}
+
 hilt {
     enableAggregatingTask = true
+}
+
+room {
+    schemaDirectory(path = "$projectDir/roomSchemas")
 }
 
 androidComponents {
@@ -381,7 +394,7 @@ tasks.register<Copy>(name = "copyDevPreviewBundle") {
     rename(bundleFile, "$renamedFileName (Developer Preview).aab")
 }
 
-tasks.register<Copy>("copyDevPreviewApk") {
+tasks.register<Copy>(name = "copyDevPreviewApk") {
     val apkFile = "app-playStore-dev.apk"
     val apkSourceDir = "${releaseRootDir}/playStore/dev/${apkFile}"
 

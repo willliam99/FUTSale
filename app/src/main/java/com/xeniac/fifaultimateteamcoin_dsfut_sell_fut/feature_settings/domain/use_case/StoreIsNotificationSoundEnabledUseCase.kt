@@ -3,10 +3,13 @@ package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_settings.domain.u
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Result
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.SettingsDataStoreRepository
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_settings.domain.errors.StoreNotificationSoundError
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class StoreIsNotificationSoundEnabledUseCase(
+@ViewModelScoped
+class StoreIsNotificationSoundEnabledUseCase @Inject constructor(
     private val settingsDataStoreRepository: SettingsDataStoreRepository
 ) {
     operator fun invoke(

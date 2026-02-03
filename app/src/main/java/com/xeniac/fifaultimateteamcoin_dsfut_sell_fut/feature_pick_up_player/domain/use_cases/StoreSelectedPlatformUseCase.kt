@@ -4,10 +4,13 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Platfor
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Result
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.DsfutDataStoreRepository
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.domain.errors.StoreSelectedPlatformError
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class StoreSelectedPlatformUseCase(
+@ViewModelScoped
+class StoreSelectedPlatformUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository
 ) {
     operator fun invoke(

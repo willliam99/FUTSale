@@ -17,6 +17,7 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.presentation.common.states.CustomTextFieldState
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.presentation.common.ui.components.BouncingDotIndicator
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_onboarding.presentation.OnboardingAction
+import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_onboarding.presentation.states.OnboardingPageItem
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_onboarding.presentation.utils.TestTags
 import kotlinx.coroutines.launch
 
@@ -29,13 +30,19 @@ fun OnboardingPager(
     onAction: (action: OnboardingAction) -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = { 4 })
+    val pagerState = rememberPagerState(
+        pageCount = { OnboardingPageItem.entries.size },
+        initialPage = OnboardingPageItem.PAGE_ONE.index
+    )
 
-    BackHandler(enabled = pagerState.settledPage != 0) {
-        scope.launch {
-            pagerState.animateScrollToPage(page = pagerState.settledPage - 1)
+    BackHandler(
+        enabled = pagerState.settledPage != OnboardingPageItem.PAGE_ONE.index,
+        onBack = {
+            scope.launch {
+                pagerState.animateScrollToPage(page = pagerState.settledPage - 1)
+            }
         }
-    }
+    )
 
     Column(modifier = modifier.fillMaxSize()) {
         BouncingDotIndicator(
@@ -57,47 +64,67 @@ fun OnboardingPager(
                 }
         ) { scrollPosition ->
             when (scrollPosition) {
-                0 -> OnboardingPageOne(
-                    onSkipBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.pageCount - 1)
+                OnboardingPageItem.PAGE_ONE.index -> {
+                    OnboardingPageOne(
+                        onSkipBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_FOUR.index
+                                )
+                            }
+                        },
+                        onNextBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_TWO.index
+                                )
+                            }
                         }
-                    },
-                    onNextBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.settledPage + 1)
+                    )
+                }
+                OnboardingPageItem.PAGE_TWO.index -> {
+                    OnboardingPageTwo(
+                        onBackBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_ONE.index
+                                )
+                            }
+                        },
+                        onNextBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_THREE.index
+                                )
+                            }
                         }
-                    }
-                )
-                1 -> OnboardingPageTwo(
-                    onBackBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.settledPage - 1)
+                    )
+                }
+                OnboardingPageItem.PAGE_THREE.index -> {
+                    OnboardingPageThree(
+                        onBackBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_TWO.index
+                                )
+                            }
+                        },
+                        onNextBtnClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    page = OnboardingPageItem.PAGE_FOUR.index
+                                )
+                            }
                         }
-                    },
-                    onNextBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.settledPage + 1)
-                        }
-                    }
-                )
-                2 -> OnboardingPageThree(
-                    onBackBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.settledPage - 1)
-                        }
-                    },
-                    onNextBtnClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(page = pagerState.settledPage + 1)
-                        }
-                    }
-                )
-                3 -> OnboardingPageFour(
-                    partnerIdState = partnerIdState,
-                    secretKeyState = secretKeyState,
-                    onAction = onAction
-                )
+                    )
+                }
+                OnboardingPageItem.PAGE_FOUR.index -> {
+                    OnboardingPageFour(
+                        partnerIdState = partnerIdState,
+                        secretKeyState = secretKeyState,
+                        onAction = onAction
+                    )
+                }
             }
         }
     }

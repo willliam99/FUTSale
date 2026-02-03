@@ -2,9 +2,12 @@ package com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_pick_up_player.do
 
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Platform
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.DsfutDataStoreRepository
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetSelectedPlatformUseCase(
+@ViewModelScoped
+class GetSelectedPlatformUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository
 ) {
     operator fun invoke(): Flow<Platform> = dsfutDataStoreRepository.getSelectedPlatform()

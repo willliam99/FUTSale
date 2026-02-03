@@ -5,11 +5,14 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.D
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.errors.UpdateSecretKeyError
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.models.UpdateSecretKeyResult
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_profile.domain.validation.ValidateSecretKey
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class UpdateSecretKeyUseCase(
+@ViewModelScoped
+class UpdateSecretKeyUseCase @Inject constructor(
     private val dsfutDataStoreRepository: DsfutDataStoreRepository,
     private val validateSecretKey: ValidateSecretKey
 ) {

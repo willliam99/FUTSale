@@ -39,7 +39,7 @@ benchmarkMacroJunit4 = "1.5.0-alpha02"
 # Plugins
 agp = "9.1.0"
 kotlin = "2.3.0"
-ksp = "2.3.5"
+ksp = "2.3.6"
 googleServices = "4.4.4"
 firebaseCrashlytics = "3.0.6"
 firebasePerf = "2.0.2"

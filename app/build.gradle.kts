@@ -24,13 +24,13 @@ val properties = gradleLocalProperties(
 
 android {
     namespace = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
-    compileSdk = 36
-    buildToolsVersion = "36.1.0"
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         applicationId = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
         minSdk = 23
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 35
         versionName = "2.1.8"
 

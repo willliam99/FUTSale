@@ -7,13 +7,13 @@ plugins {
 
 android {
     namespace = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.baselineprofile"
-    compileSdk = 36
+    compileSdk = 37
 
     targetProjectPath = ":app"
 
     defaultConfig {
         minSdk = 28
-        targetSdk = 36
+        targetSdk = 37
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

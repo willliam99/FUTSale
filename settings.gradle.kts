@@ -16,6 +16,14 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    /*
+    Gradle settings plugin that automatically
+    detects, downloads, and configures the required JDKs for project
+     */
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 rootProject.name = "FUTSale"
 include(":app")
 include(":baselineprofile")

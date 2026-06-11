@@ -24,15 +24,15 @@ val properties = gradleLocalProperties(
 
 android {
     namespace = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
-    compileSdk = 36
-    buildToolsVersion = "36.1.0"
+    compileSdk = 37
+    buildToolsVersion = "37.0.0"
 
     defaultConfig {
         applicationId = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
         minSdk = 23
-        targetSdk = 36
-        versionCode = 34
-        versionName = "2.1.7"
+        targetSdk = 37
+        versionCode = 35
+        versionName = "2.1.8"
 
         testInstrumentationRunner = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.HiltTestRunner"
 
@@ -43,13 +43,13 @@ android {
         buildConfigField(
             type = "String",
             name = "FUTSALE_HTTP_BASE_URL",
-            value = properties.getProperty("FUTSALE_HTTP_BASE_URL")
+            value = "\"https://raw.githubusercontent.com/XeniacDev/futsale/master/data\""
         )
 
         buildConfigField(
             type = "String",
             name = "DSFUT_HTTP_BASE_URL",
-            value = properties.getProperty("DSFUT_HTTP_BASE_URL")
+            value = "\"https://dsfut.net/api\""
         )
     }
 
@@ -225,16 +225,34 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/DEPENDENCIES",
+                "/META-INF/LICENSE",
+                "/META-INF/LICENSE.txt",
+                "/META-INF/NOTICE"
+            )
         }
     }
 
     bundle {
         language {
-            /*
-            Specifies that the app bundle should not support configuration APKs for language resources.
-            These resources are instead packaged with each base and dynamic feature APK.
-             */
+            // Disables splitting of language-specific resources (e.g., strings for different languages).
+            enableSplit = false
+        }
+
+        density {
+            // Disables splitting of density-specific resources (e.g., drawables for different screen densities).
+            enableSplit = false
+        }
+
+        countrySet {
+            // Disables splitting of country-specific resources (e.g., drawables for different countries).
+            enableSplit = false
+        }
+
+        abi {
+            // Disables splitting of ABI-specific resources (e.g., native libraries for different architectures).
             enableSplit = false
         }
     }
@@ -311,6 +329,9 @@ dependencies {
     // Java 8+ API Desugaring Support
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
+    // Kotlin Metadata JVM library
+    ksp(libs.kotlin.metadata.jvm)
+
     implementation(libs.bundles.essentials)
 
     // Jetpack Compose
@@ -328,6 +349,7 @@ dependencies {
     implementation(libs.bundles.coroutines)
 
     // Ktor Client Library
+    implementation(platform(libs.ktor.bom))
     implementation(libs.bundles.ktor)
 
     // Room Library
@@ -364,9 +386,11 @@ dependencies {
     implementation(libs.profileinstaller)
 
     // Local Unit Test Libraries
+    testImplementation(platform(libs.ktor.bom))
     testImplementation(libs.bundles.local.unit.tests)
 
     // Instrumentation Test Libraries
+    androidTestImplementation(platform(libs.ktor.bom))
     androidTestImplementation(libs.bundles.instrumentation.tests)
     kspAndroidTest(libs.hilt.android.compiler)
 
@@ -385,6 +409,8 @@ val versionName = "${android.defaultConfig.versionName}"
 val renamedFileName = "FUTSale $versionName"
 
 tasks.register<Copy>(name = "copyDevPreviewBundle") {
+    description = "copyDevPreviewBundle"
+
     val bundleFile = "app-playStore-dev.aab"
     val bundleSourceDir = "${releaseRootDir}/playStore/dev/${bundleFile}"
 
@@ -395,6 +421,8 @@ tasks.register<Copy>(name = "copyDevPreviewBundle") {
 }
 
 tasks.register<Copy>(name = "copyDevPreviewApk") {
+    description = "copyDevPreviewApk"
+
     val apkFile = "app-playStore-dev.apk"
     val apkSourceDir = "${releaseRootDir}/playStore/dev/${apkFile}"
 
@@ -405,6 +433,8 @@ tasks.register<Copy>(name = "copyDevPreviewApk") {
 }
 
 tasks.register<Copy>(name = "copyReleaseApk") {
+    description = "copyReleaseApk"
+
     val gitHubApkFile = "app-gitHub-release.apk"
     val cafeBazaarApkFile = "app-cafeBazaar-release.apk"
     val myketApkFile = "app-myket-release.apk"
@@ -428,6 +458,8 @@ tasks.register<Copy>(name = "copyReleaseApk") {
 }
 
 tasks.register<Copy>(name = "copyReleaseBundle") {
+    description = "copyReleaseBundle"
+
     val playStoreBundleFile = "app-playStore-release.aab"
     val playStoreBundleSourceDir = "${releaseRootDir}/playStore/release/${playStoreBundleFile}"
 
@@ -438,6 +470,8 @@ tasks.register<Copy>(name = "copyReleaseBundle") {
 }
 
 tasks.register<Copy>(name = "copyObfuscationFolder") {
+    description = "copyObfuscationFolder"
+
     val obfuscationSourceDir = "${rootDir}/app/obfuscation"
 
     from(obfuscationSourceDir)
@@ -445,5 +479,7 @@ tasks.register<Copy>(name = "copyObfuscationFolder") {
 }
 
 tasks.register("copyReleaseFiles") {
+    description = "copyReleaseFiles"
+
     dependsOn("copyReleaseApk", "copyReleaseBundle", "copyObfuscationFolder")
 }

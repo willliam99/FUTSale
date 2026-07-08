@@ -1,5 +1,5 @@
 # FUTSale 26: Sell FC Coins
-![platform](https://img.shields.io/badge/platform-android-success)&nbsp;![GitHub release (latest by date)](https://img.shields.io/github/v/release/WilliamGates99/FUTSale)&nbsp;![GitHub](https://img.shields.io/github/license/WilliamGates99/FUTSale)
+![platform](https://img.shields.io/badge/platform-android-success)&nbsp;![GitHub release (latest by date)](https://img.shields.io/github/v/release/willliam99/FUTSale)&nbsp;![GitHub](https://img.shields.io/github/license/willliam99/FUTSale)
 
 ## Download
 <a href="https://play.google.com/store/apps/details?id=com.xeniac.fifaultimateteamcoin_dsfut_sell_fut" target="_blank"><img alt="Get it on Google Play" height="60" align="center" src="/resources/badges/google-play-badge.svg"/></a>

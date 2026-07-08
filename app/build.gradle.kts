@@ -161,7 +161,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "URL_APP_STORE",
-                value = "\"https://github.com/WilliamGates99/FUTSale\""
+                value = "\"https://github.com/willliam99/FUTSale\""
             )
 
             buildConfigField(

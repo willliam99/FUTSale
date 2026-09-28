@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 37
         versionCode = 37
         versionName = "2.2.0-Alpha1"

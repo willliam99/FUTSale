@@ -34,7 +34,7 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.components.AppUpdateBottomSheet
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.components.CustomNavigationBar
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.components.NavigationBarItems
-import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.components.PostNotificationPermissionHandler
+import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.feature_home.presentation.components.PostNotificationPermission
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,9 +149,8 @@ fun HomeScreen(
         )
     }
 
-    PostNotificationPermissionHandler(
-        isPermissionDialogVisible = state.isPermissionDialogVisible,
-        permissionDialogQueue = state.permissionDialogQueue,
+    PostNotificationPermission(
+        state = state.postNotificationPermissionState,
         onAction = viewModel::onAction
     )
 

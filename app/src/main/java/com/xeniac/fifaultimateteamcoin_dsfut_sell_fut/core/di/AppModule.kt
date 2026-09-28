@@ -54,6 +54,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.internal.SynchronizedObject
+import kotlinx.io.files.Path
 import kotlinx.serialization.json.Json
 import java.security.MessageDigest
 import java.text.DecimalFormat
@@ -110,13 +111,16 @@ internal object AppModule {
     ): HttpClient = HttpClient(engineFactory = OkHttp) {
         expectSuccess = true
 
+        engine {
+            dispatcher = Dispatchers.IO
+        }
         install(Logging) {
             logger = Logger.ANDROID
             level = if (BuildConfig.DEBUG) LogLevel.INFO else LogLevel.NONE
             sanitizeHeader { header -> header == HttpHeaders.Authorization }
         }
         install(HttpCache) {
-            val cacheDir = context.cacheDir.resolve(relative = "ktor_cache")
+            val cacheDir = Path(base = context.cacheDir.absolutePath, "ktor_cache")
             privateStorage(storage = FileStorage(directory = cacheDir))
         }
         install(ContentNegotiation) {

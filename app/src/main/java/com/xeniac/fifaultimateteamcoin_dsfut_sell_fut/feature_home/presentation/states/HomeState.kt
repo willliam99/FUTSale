@@ -9,12 +9,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class HomeState(
-    val notificationPermissionCount: Int = 0,
-    val permissionDialogQueue: List<String> = emptyList(),
-    val isPermissionDialogVisible: Boolean = false,
     val isAppReviewDialogVisible: Boolean = false,
     val selectedRateAppOption: RateAppOption? = null,
     val previousRateAppRequestDateTime: PreviousRateAppRequestDateTime? = null,
     val inAppReviewInfo: ReviewInfo? = null,
-    val latestAppUpdateInfo: LatestAppUpdateInfo? = null
+    val latestAppUpdateInfo: LatestAppUpdateInfo? = null,
+    val postNotificationPermissionState: PostNotificationPermissionState = PostNotificationPermissionState()
 ) : Parcelable

@@ -21,7 +21,7 @@ interface PickUpPlayerRepository {
             val partnerId: String,
             val timestamp: Long,
             val signature: String,
-            val gameYear: Int = 26
+            val gameYear: Int = 27
         ) : EndPoints(
             url = "${BuildConfig.DSFUT_HTTP_BASE_URL}/$gameYear/$platform/$partnerId/$timestamp/$signature"
         )

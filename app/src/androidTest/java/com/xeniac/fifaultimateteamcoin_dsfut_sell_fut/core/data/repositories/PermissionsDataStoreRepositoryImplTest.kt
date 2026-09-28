@@ -15,8 +15,6 @@ import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.models.Permiss
 import com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.core.domain.repositories.PermissionsDataStoreRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -68,24 +66,20 @@ class PermissionsDataStoreRepositoryImplTest {
 
     /*
     Fetch Initial Preferences Test Cases:
-    getNotificationPermissionCount -> 0
+    isRequestNotificationPermissionShownToday -> false
      */
     @Test
     fun fetchInitialPreferences() = testScope.runTest {
-        with(testRepository) {
-            val initialNotificationsPermissionCount = getNotificationPermissionCount().first()
+        val isShownToday = testRepository.isRequestNotificationPermissionShownToday()
 
-            assertThat(initialNotificationsPermissionCount).isEqualTo(0)
-        }
+        assertThat(isShownToday).isFalse()
     }
 
     @Test
-    fun writeNotificationPermissionCount() = testScope.runTest {
-        val testValue = 2
-        testRepository.storeNotificationPermissionCount(count = testValue)
+    fun writeRequestNotificationPermissionDate() = testScope.runTest {
+        testRepository.storeRequestNotificationPermissionDate()
 
-        testRepository.getNotificationPermissionCount().onEach { notificationPermissionCount ->
-            assertThat(notificationPermissionCount).isEqualTo(testValue)
-        }
+        val isShownToday = testRepository.isRequestNotificationPermissionShownToday()
+        assertThat(isShownToday).isTrue()
     }
 }

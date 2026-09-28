@@ -16,7 +16,7 @@ import org.junit.runners.JUnit4
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(JUnit4::class)
-class StoreNotificationPermissionCountUseCaseTest {
+class GetIsRequestNotificationPermissionShownTodayUseCaseTest {
 
     @get:Rule
     var instanceTaskExecutorRule = InstantTaskExecutorRule()
@@ -25,27 +25,21 @@ class StoreNotificationPermissionCountUseCaseTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var fakePermissionsDataStoreRepositoryImpl: FakePermissionsDataStoreRepositoryImpl
-    private lateinit var storeNotificationPermissionCountUseCase: StoreNotificationPermissionCountUseCase
-    private lateinit var getNotificationPermissionCountUseCase: GetNotificationPermissionCountUseCase
+    private lateinit var getIsRequestNotificationPermissionShownTodayUseCase: GetIsRequestNotificationPermissionShownTodayUseCase
 
     @Before
     fun setUp() {
         fakePermissionsDataStoreRepositoryImpl = FakePermissionsDataStoreRepositoryImpl()
-        storeNotificationPermissionCountUseCase = StoreNotificationPermissionCountUseCase(
-            permissionsDataStoreRepository = fakePermissionsDataStoreRepositoryImpl
-        )
-        getNotificationPermissionCountUseCase = GetNotificationPermissionCountUseCase(
-            permissionsDataStoreRepository = fakePermissionsDataStoreRepositoryImpl
-        )
+        getIsRequestNotificationPermissionShownTodayUseCase =
+            GetIsRequestNotificationPermissionShownTodayUseCase(
+                repository = fakePermissionsDataStoreRepositoryImpl
+            )
     }
 
     @Test
-    fun storeNotificationPermissionCount_returnsNewNotificationPermissionCount() = runTest {
-        val testValue = 2
-        storeNotificationPermissionCountUseCase(count = testValue).launchIn(scope = this)
-
-        getNotificationPermissionCountUseCase().onEach { notificationPermissionCount ->
-            assertThat(notificationPermissionCount).isEqualTo(testValue)
-        }
+    fun getDefaultIsRequestNotificationPermissionShownToday_returnsFalse() = runTest {
+        getIsRequestNotificationPermissionShownTodayUseCase().onEach { isShownToday ->
+            assertThat(isShownToday).isFalse()
+        }.launchIn(scope = this)
     }
 }

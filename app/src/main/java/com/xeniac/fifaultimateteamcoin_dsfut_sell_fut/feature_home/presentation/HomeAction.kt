@@ -13,10 +13,10 @@ sealed interface HomeAction {
     data object SetSelectedRateAppOptionToRemindLater : HomeAction
     data object DismissAppReviewDialog : HomeAction
 
-    data class OnPermissionResult(
-        val permission: String,
-        val isGranted: Boolean
+    data class OnNotificationPermissionResult(
+        val isGranted: Boolean,
+        val isPermanentlyDeclined: Boolean
     ) : HomeAction
 
-    data class DismissPermissionDialog(val permission: String) : HomeAction
+    data object DismissNotificationPermissionDialog : HomeAction
 }

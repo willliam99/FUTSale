@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PickUpPlayerResponseDto(
-    @SerialName("error")
-    val error: String,
-    @SerialName("message")
-    val message: String,
     @SerialName("player")
-    val playerDto: PlayerDto? = null
+    val playerDto: PlayerDto? = null,
+    @SerialName("message")
+    val message: String? = null,
+    @SerialName("error")
+    val error: String? = null
 )

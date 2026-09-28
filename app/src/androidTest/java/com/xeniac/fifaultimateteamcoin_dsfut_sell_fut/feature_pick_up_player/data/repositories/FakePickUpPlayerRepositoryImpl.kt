@@ -64,20 +64,20 @@ class FakePickUpPlayerRepositoryImpl @Inject constructor(
             val pickUpPlayerResponseDto = if (pickUpPlayerHttpStatusCode == HttpStatusCode.OK) {
                 if (isPlayersQueueEmpty) {
                     PickUpPlayerResponseDto(
-                        error = Constants.ERROR_DSFUT_EMPTY,
-                        message = "Queue is empty"
+                        message = "Queue is empty",
+                        error = Constants.ERROR_DSFUT_EMPTY
                     )
                 } else {
                     PickUpPlayerResponseDto(
-                        error = "",
+                        playerDto = DummyPlayersHelper.dummyPlayerDto,
                         message = "1 player popped",
-                        playerDto = DummyPlayersHelper.dummyPlayerDto
+                        error = ""
                     )
                 }
             } else {
                 PickUpPlayerResponseDto(
-                    error = Constants.ERROR_DSFUT_EMPTY,
-                    message = "Queue is empty"
+                    message = "Queue is empty",
+                    error = Constants.ERROR_DSFUT_EMPTY
                 )
             }
 
@@ -124,7 +124,10 @@ class FakePickUpPlayerRepositoryImpl @Inject constructor(
                 }
 
                 val pickUpPlayerError = when (responseDto.error) {
-                    Constants.ERROR_DSFUT_BLOCK -> PickUpPlayerError.Network.DsfutBlock(message = responseDto.message)
+                    Constants.ERROR_DSFUT_BLOCK -> when {
+                        responseDto.message.isNullOrBlank() -> PickUpPlayerError.Network.SomethingWentWrong
+                        else -> PickUpPlayerError.Network.DsfutBlock(message = responseDto.message)
+                    }
                     Constants.ERROR_DSFUT_EMPTY -> PickUpPlayerError.Network.DsfutEmpty
                     Constants.ERROR_DSFUT_LIMIT -> PickUpPlayerError.Network.DsfutLimit
                     Constants.ERROR_DSFUT_MAINTENANCE -> PickUpPlayerError.Network.DsfutMaintenance
@@ -136,7 +139,7 @@ class FakePickUpPlayerRepositoryImpl @Inject constructor(
                     else -> PickUpPlayerError.Network.SomethingWentWrong
                 }
 
-                return Result.Error(pickUpPlayerError)
+                Result.Error(pickUpPlayerError)
             }
             else -> Result.Error(PickUpPlayerError.Network.SomethingWentWrong)
         }

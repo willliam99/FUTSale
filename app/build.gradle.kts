@@ -32,7 +32,7 @@ android {
         minSdk = 24
         targetSdk = 37
         versionCode = 37
-        versionName = "2.2.0-Alpha1"
+        versionName = "2.2.0"
 
         testInstrumentationRunner = "com.xeniac.fifaultimateteamcoin_dsfut_sell_fut.HiltTestRunner"
 
